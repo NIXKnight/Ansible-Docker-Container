@@ -1,2 +1,83 @@
 ---
 # tasks file for Ansible-Docker-Container
+- name: Check if Container is Running
+  docker_container_info:
+    name: "{{ DOCKER_CONTAINER_NAME }}"
+  register: docker_container
+  tags:
+    - "install"
+    - "update"
+
+- name: Check for Docker Volume(s)
+  docker_volume_info:
+    name: "{{ item }}"
+  register: docker_volume
+  with_items: "{{ DOCKER_VOLUMES }}"
+  when: DOCKER_VOLUMES is defined and DOCKER_VOLUMES | length > 0
+  tags:
+    - "install"
+
+- name: Stop and Remove Container
+  docker_container:
+    name: "{{ DOCKER_CONTAINER_NAME }}"
+    state: "absent"
+  when: docker_container.exists
+  tags:
+    - "install"
+    - "update"
+
+- name: Remove Image
+  docker_image:
+    name: "{{ DOCKER_CONTAINER_IMAGE }}"
+    state: absent
+  when: docker_container.exists
+  tags:
+    - "install"
+    - "update"
+
+- name: Create Docker Volume
+  docker_volume:
+    name: "{{ item }}"
+  with_items: "{{ DOCKER_VOLUMES }}"
+  when: DOCKER_VOLUMES is defined and DOCKER_VOLUMES | length > 0
+  tags:
+    - "install"
+
+- name: Pull Docker Image {{ DOCKER_CONTAINER_IMAGE }}
+  docker_image:
+    name: "{{ DOCKER_CONTAINER_IMAGE }}"
+    source: pull
+  tags:
+    - "install"
+    - "update"
+
+- name: Start Docker Container with Ports Exposed
+  docker_container:
+    name: "{{ DOCKER_CONTAINER_NAME }}"
+    hostname: "{{ DOCKER_CONTAINER_NAME }}"
+    image: "{{ DOCKER_CONTAINER_IMAGE }}"
+    state: started
+    restart_policy: "{{ DOCKER_CONTAINER_RESTART_POLICY }}"
+    ports: "{{ DOCKER_CONTAINER_PORT_MAPPING }}"
+    volumes: "{{ DOCKER_VOLUME_MAPPING }}"
+    env: "{{ DOCKER_CONTAINER_ENVIRONMENT_VARS }}"
+    network_mode: "{{ DOCKER_NETWORK_NAME }}"
+  when: DOCKER_EXPOSE_PORTS
+  tags:
+    - "install"
+    - "update"
+
+- name: Start Elasticsearch Docker Container
+  docker_container:
+    name: "{{ DOCKER_CONTAINER_NAME }}"
+    hostname: "{{ DOCKER_CONTAINER_NAME }}"
+    image: "{{ DOCKER_CONTAINER_IMAGE }}"
+    state: started
+    restart_policy: "{{ DOCKER_CONTAINER_RESTART_POLICY }}"
+    volumes: "{{ DOCKER_VOLUME_MAPPING }}"
+    env: "{{ DOCKER_ENVIRONMENT_VARS }}"
+    network_mode: "{{ DOCKER_NETWORK_NAME }}"
+  when: not DOCKER_EXPOSE_PORTS
+  tags:
+    - "install"
+    - "update"

@@ -1,7 +1,7 @@
 dependencies: []
 galaxy_info:
   author: Saad Ali
-  description: Ansible role for deploying a Docker container.
+  description: Ansible role for deploying a Docker containers.
   license: license (MIT)
   min_ansible_version: 2.10
   platforms:

@@ -1,6 +1,6 @@
 # **Ansible-Docker-Container**
 
-Ansible role for deploying a Docker container.
+Ansible role for deploying a Docker containers.
 
 ## **License**
 
