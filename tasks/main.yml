@@ -59,7 +59,7 @@
     state: started
     restart_policy: "{{ DOCKER_CONTAINER_RESTART_POLICY }}"
     ports: "{{ DOCKER_CONTAINER_PORT_MAPPING }}"
-    volumes: "{{ DOCKER_VOLUME_MAPPING }}"
+    volumes: "{{ DOCKER_CONTAINER_VOLUME_MAPPING }}"
     env: "{{ DOCKER_CONTAINER_ENVIRONMENT_VARS }}"
     network_mode: "{{ DOCKER_NETWORK_NAME }}"
   when: DOCKER_EXPOSE_PORTS
@@ -74,7 +74,7 @@
     image: "{{ DOCKER_CONTAINER_IMAGE }}"
     state: started
     restart_policy: "{{ DOCKER_CONTAINER_RESTART_POLICY }}"
-    volumes: "{{ DOCKER_VOLUME_MAPPING }}"
+    volumes: "{{ DOCKER_CONTAINER_VOLUME_MAPPING }}"
     env: "{{ DOCKER_ENVIRONMENT_VARS }}"
     network_mode: "{{ DOCKER_NETWORK_NAME }}"
   when: not DOCKER_EXPOSE_PORTS
