@@ -75,7 +75,7 @@
     state: started
     restart_policy: "{{ DOCKER_CONTAINER_RESTART_POLICY }}"
     volumes: "{{ DOCKER_CONTAINER_VOLUME_MAPPING }}"
-    env: "{{ DOCKER_ENVIRONMENT_VARS }}"
+    env: "{{ DOCKER_CONTAINER_ENVIRONMENT_VARS }}"
     network_mode: "{{ DOCKER_NETWORK_NAME }}"
   when: not DOCKER_EXPOSE_PORTS
   tags:
