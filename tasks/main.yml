@@ -57,6 +57,7 @@
     hostname: "{{ DOCKER_CONTAINER_NAME }}"
     image: "{{ DOCKER_CONTAINER_IMAGE }}"
     state: started
+    privileged: "{{ DOCKER_CONTAINER_PRIVILEDGED }}"
     restart_policy: "{{ DOCKER_CONTAINER_RESTART_POLICY }}"
     ports: "{{ DOCKER_CONTAINER_PORT_MAPPING }}"
     volumes: "{{ DOCKER_CONTAINER_VOLUME_MAPPING }}"
@@ -73,6 +74,7 @@
     hostname: "{{ DOCKER_CONTAINER_NAME }}"
     image: "{{ DOCKER_CONTAINER_IMAGE }}"
     state: started
+    privileged: "{{ DOCKER_CONTAINER_PRIVILEDGED }}"
     restart_policy: "{{ DOCKER_CONTAINER_RESTART_POLICY }}"
     volumes: "{{ DOCKER_CONTAINER_VOLUME_MAPPING }}"
     env: "{{ DOCKER_CONTAINER_ENVIRONMENT_VARS }}"
