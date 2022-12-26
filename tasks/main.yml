@@ -67,7 +67,7 @@
     - "install"
     - "update"
 
-- name: Start Elasticsearch Docker Container
+- name: Start {{ DOCKER_CONTAINER_NAME }} Docker Container
   docker_container:
     name: "{{ DOCKER_CONTAINER_NAME }}"
     hostname: "{{ DOCKER_CONTAINER_NAME }}"
